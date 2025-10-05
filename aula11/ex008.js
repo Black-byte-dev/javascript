@@ -1,1 +1,2 @@
-console.log('o console funcionou corretamente!')
+var vel = 60.5
+console.log(`a velocidade do carro é ${vel} Km/h`)
