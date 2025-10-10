@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificador de idade</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -13,8 +14,7 @@
         <div id="formulario">
             <form action="verificador.html" method="get">
                 <div>
-                    <label for="idade">Digite sua idade:</label>
-                    <input type="number" id="idade" name="idade" required>
+                    <input class="text" type="text" name="idade" id="Idade" placeholder="Digite sua Idade" required>
                 </div>
                 <div>
                     <label>Sexo:</label>
@@ -26,18 +26,72 @@
                 <label for="feminino">Feminino</label>
                 </div>
                 <div>
-                    <input type="submit" value="Verificar">
+                    <button type="submit" value="Verificar">verificar</button>
                 </div>
             </form>
+            <p>Prencha os dados acima para ver o resultado!</p>
         </div>
-
-        </div>
-        <div>
+        <div id="resultado"></div>
+        <div id="imagens">
+            <img src="Imagens/adulto-feminino.png" alt="Idade" width="250px">
+            <img src="Imagens/adulto-masculino.png" alt="Idade" width="250px">
+            <img src="Imagens/criança-feminina.png" alt="Idade" width="250px"> 
+            <img src="Imagens/criança-masulino.png" alt="Idade" width="250px">
+            <img src="Imagens/jovem-feminina.png" alt="Idade" width="250px">
+            <img src="Imagens/jovem-masculino.png" alt="Idade" width="250px">
+            <img src="Imagens/velha-feminina.png" alt="Idade" width="250px">
+            <img src="Imagens/velho-masculino.png" alt="Idade" width="250px">
 
         </div>
     </section>
     <footer>
         <p>&copy; Desenvolvido por: Black</p>
     </footer>
+
+    <script>
+        const form = document.querySelector('form');
+        const resultadoDiv = document.getElementById('resultado');
+        const imagensDiv = document.getElementById('imagens');
+        const imagens = imagensDiv.getElementsByTagName('img');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const idade = parseInt(document.getElementById('Idade').value);
+            const sexo = document.querySelector('input[name="sexo"]:checked').value;
+
+            let categoria = 'idade';
+            let imagemSrc = 'sexo';
+
+            if (idade >= 0 && idade <= 12) {
+                categoria = 'Criança';
+                imagemSrc = sexo === 'masculino' ? 'Imagens/criança-masulino.png' : 'Imagens/criança-feminina.png';
+            } else if (idade >= 13 && idade <= 20) {
+                categoria = 'Jovem';
+                imagemSrc = sexo === 'masculino' ? 'Imagens/jovem-masculino.png' : 'Imagens/jovem-feminina.png';
+            } else if (idade >= 21 && idade <= 59) {
+                categoria = 'Adulto';
+                imagemSrc = sexo === 'masculino' ? 'Imagens/adulto-masculino.png' : 'Imagens/adulto-feminino.png';
+            } else if (idade >= 60) {
+                categoria = 'Idoso';
+                imagemSrc = sexo === 'masculino' ? 'Imagens/velho-masculino.png' : 'Imagens/velha-feminina.png';
+            } else {
+                resultadoDiv.innerHTML = '<p>Por favor, insira uma idade válida.</p>';
+                return;
+            }
+
+            resultadoDiv.innerHTML = `<p>Detectamos ${categoria} com ${idade} anos.</p>`;
+
+            for (let img of imagens) {
+                img.style.display = img.src.includes(imagemSrc.split('/').pop()) ? 'block' : 'none';
+            }
+        });
+
+        for (let img of imagens) {
+            img.style.display = 'none';
+        }
+
+
+    </script>
 </body>
 </html>
