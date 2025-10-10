@@ -26,7 +26,7 @@
                 <label for="feminino">Feminino</label>
                 </div>
                 <div>
-                    <button type="submit" value="Verificar">verificar</button>
+                    <button type="submit" value="Verificar" id="res" onclick="Verificar">verificar</button>
                 </div>
             </form>
             <p>Prencha os dados acima para ver o resultado!</p>
@@ -49,49 +49,7 @@
     </footer>
 
     <script>
-        const form = document.querySelector('form');
-        const resultadoDiv = document.getElementById('resultado');
-        const imagensDiv = document.getElementById('imagens');
-        const imagens = imagensDiv.getElementsByTagName('img');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const idade = parseInt(document.getElementById('Idade').value);
-            const sexo = document.querySelector('input[name="sexo"]:checked').value;
-
-            let categoria = 'idade';
-            let imagemSrc = 'sexo';
-
-            if (idade >= 0 && idade <= 12) {
-                categoria = 'Criança';
-                imagemSrc = sexo === 'masculino' ? 'Imagens/criança-masulino.png' : 'Imagens/criança-feminina.png';
-            } else if (idade >= 13 && idade <= 20) {
-                categoria = 'Jovem';
-                imagemSrc = sexo === 'masculino' ? 'Imagens/jovem-masculino.png' : 'Imagens/jovem-feminina.png';
-            } else if (idade >= 21 && idade <= 59) {
-                categoria = 'Adulto';
-                imagemSrc = sexo === 'masculino' ? 'Imagens/adulto-masculino.png' : 'Imagens/adulto-feminino.png';
-            } else if (idade >= 60) {
-                categoria = 'Idoso';
-                imagemSrc = sexo === 'masculino' ? 'Imagens/velho-masculino.png' : 'Imagens/velha-feminina.png';
-            } else {
-                resultadoDiv.innerHTML = '<p>Por favor, insira uma idade válida.</p>';
-                return;
-            }
-
-            resultadoDiv.innerHTML = `<p>Detectamos ${categoria} com ${idade} anos.</p>`;
-
-            for (let img of imagens) {
-                img.style.display = img.src.includes(imagemSrc.split('/').pop()) ? 'block' : 'none';
-            }
-        });
-
-        for (let img of imagens) {
-            img.style.display = 'none';
-        }
-
-
+        
     </script>
 </body>
 </html>
