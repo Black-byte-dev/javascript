@@ -11,37 +11,17 @@
         <h1>Verificador de idade</h1>
     </header>
     <section>
-        <div id="formulario">
-            <form action="verificador.html" method="get">
-                <div>
-                    <input class="text" type="text" name="idade" id="Idade" placeholder="Digite sua Idade" required>
-                </div>
-                <div>
-                    <label>Sexo:</label>
-
-                    <input type="radio" id="masculino" name="sexo" value="masculino" required>
-                <label for="masculino">Masculino</label>
-
-                    <input type="radio" id="feminino" name="sexo" value="feminino">
-                <label for="feminino">Feminino</label>
-                </div>
-                <div>
-                    <button type="submit" value="Verificar" id="res" onclick="Verificar">verificar</button>
-                </div>
-            </form>
-            <p>Prencha os dados acima para ver o resultado!</p>
+        <div id="entrada">
+            <input type="text" id="nome" placeholder="Ano de nascimento">
+            <input type="radio" value="mas" name="sexo" id="masc" checked>
+            <label for="Masc">Masculino</label>
+            <input type="radio" value="fem" name="sexo" id="fem">
+            <label for="Fem">Feminino</label>
+            <input type="button" value="Verificar" onclick="resultado()">
         </div>
-        <div id="resultado"></div>
-        <div id="imagens">
-            <img src="Imagens/adulto-feminino.png" alt="Idade" width="250px">
-            <img src="Imagens/adulto-masculino.png" alt="Idade" width="250px">
-            <img src="Imagens/criança-feminina.png" alt="Idade" width="250px"> 
-            <img src="Imagens/criança-masulino.png" alt="Idade" width="250px">
-            <img src="Imagens/jovem-feminina.png" alt="Idade" width="250px">
-            <img src="Imagens/jovem-masculino.png" alt="Idade" width="250px">
-            <img src="Imagens/velha-feminina.png" alt="Idade" width="250px">
-            <img src="Imagens/velho-masculino.png" alt="Idade" width="250px">
 
+        <div id="res">
+        <p>Prencha os dados acima para ver o resultado!</p>
         </div>
     </section>
     <footer>
@@ -49,7 +29,47 @@
     </footer>
 
     <script>
-        
+        function resultado(){
+            var data = new Date()
+            var ano = data.getFullYear()
+            var fano = document.getElementById('nome')
+            var res = document.getElementById('res')
+            if(fano.value.length == 0 || Number(fano.value) > ano){
+                window.alert('[ERRO] Verifique os dados e tente novamente!')
+            } else {
+                var fsex = document.getElementsByName('sexo')
+                var idade = ano - Number(fano.value)
+                var gênero = ''
+                var img = document.createElement('img')
+                img.setAttribute('id', 'foto')
+                if (fsex[0].checked){
+                    gênero = 'Homem'
+                    if(idade >=0 && idade < 10){
+                        img.setAttribute('src', 'criança-m.png')
+                    } else if (idade < 21){
+                        img.setAttribute('src', 'jovem-m.png')
+                    } else if (idade < 50){
+                        img.setAttribute('src', 'adulto-m.png')
+                    } else {
+                        img.setAttribute('src', 'idoso-m.png')
+                    }
+                } else if (fsex[1].checked){
+                    gênero = 'Mulher'
+                    if(idade >=0 && idade < 10){
+                        img.setAttribute('src', 'criança-f.png')
+                    } else if (idade < 21){
+                        img.setAttribute('src', 'jovem-f.png')
+                    } else if (idade < 50){
+                        img.setAttribute('src', 'adulto-f.png')
+                    } else {
+                        img.setAttribute('src', 'idoso-f.png')
+                    }
+                }
+                res.style.textAlign = 'center'
+                res.innerHTML = `<p>Detectamos ${gênero} com ${idade} anos.</p>`
+                res.appendChild(img)
+            }
+        }
     </script>
 </body>
 </html>
